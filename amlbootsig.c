@@ -32,14 +32,14 @@ static int boot_sig(const char *input, const char *output)
 		.size = sizeof(struct AmlogicHeader),
 		.header_size = sizeof(struct AmlogicHeader),
 		.version_major = 1,
-		.version_minor = 0, // 0 for gxbb, 1 for gxl
+		.version_minor = 1, // 0 for gxbb, 1 for gxl
 	};
 	SHA256_CTX sha256_ctx;
 	uint8_t sha256_digest[SHA256_DIGEST_LENGTH];
 
 	assert(sizeof(struct AmlogicHeader) == 64);
 
-	src_buf = malloc(0xb000);
+	src_buf = malloc(0xf000);
 	if (src_buf == NULL)
 		return 1;
 
@@ -64,7 +64,7 @@ static int boot_sig(const char *input, const char *output)
 
 	fwrite(random, 1, 16, fout);
 
-	fread(src_buf, 1, 0xb000, fin);
+	fread(src_buf, 1, 0xf000, fin);
 
 	if (strncmp(src_buf + 16, "@AML", 4) == 0) {
 		fprintf(stderr, "@AML discovered in input!\n");
@@ -83,7 +83,7 @@ static int boot_sig(const char *input, const char *output)
 
 	hdr.payload_type = 0;
 	hdr.payload_offset = hdr.size; // aligned to end up at 0xd9001000
-	hdr.payload_size = 0xb000; // bl1 read 0xc000 starting from 0 (emmc) or 512 (sd)
+	hdr.payload_size = 0xf000; // bl1 read 0xc000 starting from 0 (emmc) or 512 (sd)
 	hdr.size += hdr.payload_size;
 
 	// data to include in the sha256 digest
