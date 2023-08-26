@@ -14,16 +14,16 @@
 static void print_aml_header(const struct AmlogicHeader *hdr)
 {
 	printf("Size: 0x%" PRIx32 "\n", hdr->size);
-	printf("Header size: 0x%" PRIx16 "\n", hdr->header_size);
-	printf("Header version: %" PRIu16 "\n", hdr->header_version);
+	printf("Header size: 0x%" PRIx8 "\n", hdr->header_size);
+	printf("Header version: %" PRIu8 ".%" PRIu8 "\n", hdr->version_major, hdr->version_minor);
 	printf("ID: 0x%" PRIx32 "\n", hdr->id);
-	printf("Encrypted? %" PRIu32 "\n", hdr->encrypted);
+	printf("Digest Type %" PRIu32 "\n", hdr->digest_type);
 	printf("Digest @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->digest_offset, hdr->digest_size);
-	printf("Data @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->data_offset, hdr->data_size);
+	printf("Padding Type %" PRIu32 "\n", hdr->padding_type);
 	printf("Padding @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->padding_offset, hdr->padding_size);
-	printf("_offset2: 0x%" PRIx32 "\n", hdr->_offset2);
-	printf("pad2: 0x%" PRIx32 "\n", hdr->pad2);
+	printf("Payload Type %" PRIu32 "\n", hdr->payload_type);
 	printf("Payload @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->payload_offset, hdr->payload_size);
+	printf("Data @ 0x%" PRIx32 ", len %" PRIu32 "\n", hdr->data_offset, hdr->data_size);
 	printf("unknown: 0x%" PRIx32 "\n", hdr->unknown);
 	printf("\n");
 }
